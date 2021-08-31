@@ -1,0 +1,54 @@
+#: import utils kivy.utils
+
+# Set defaults to label
+<Label>:
+    color: '#FFFFFF'
+    font_size: 64
+
+<Button>:
+    background_color: utils.get_color_from_hex('#1DB954')
+    color: utils.get_color_from_hex('#FFFFFF')
+    background_normal: ''
+
+BoxLayout:
+    size: root.width, root.height
+    canvas.before:
+        Color:
+            rgb: utils.get_color_from_hex('#000000')
+
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    
+    # Main Content
+
+    FloatLayout:
+        size: root.width, root.height
+
+        Label:
+            id: label_title
+            font_name: "Gotham"
+            text: 'SpotDLGUI'
+            font_size: root.width / 36
+            pos_hint: {"center_x": 0.09, "center_y": 0.94}
+
+        Label:
+            id: instruction_label
+            font_name: "Gotham"
+            text: 'Enter your song URL'
+            font_size: "20dp"
+            pos_hint: {"center_x": 0.5, "center_y": 0.8}
+        
+        TextInput:
+            size_hint: 0.4, 0.1
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+        Button:
+            id: download_button
+            text: "Download Song"
+            font_name: "Gotham"
+            font_size: root.width / 44
+            on_release: app.download_song
+            size_hint: (0.3, 0.12)
+            pos_hint: {"center_x": 0.5, "center_y": 0.26}
