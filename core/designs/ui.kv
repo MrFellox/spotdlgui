@@ -10,6 +10,25 @@
     color: utils.get_color_from_hex('#FFFFFF')
     background_normal: ''
 
+<DownloadingPopup@Popup>:
+    auto_dismiss: False
+    title: ''
+    size_hint: 0.5, 0.5
+    separator_color: utils.get_color_from_hex('#1DB954')
+    title_size: 34
+    title_font: 'Gotham'
+
+    GridLayout:
+        size: self.width, self.height
+        
+        cols: 1
+
+        Label:
+            id: popup_label
+            color: utils.get_color_from_hex('#FFFFFF')
+            text: ''
+            font_size: 32
+            pos_hint: {'center_x': 1, 'center_y': 1}
 BoxLayout:
     size: root.width, root.height
     canvas.before:
