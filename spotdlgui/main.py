@@ -1,3 +1,4 @@
+from spotdl import download
 from core.spotdlgui.scripts import utils as app_utils
 from kivy.app import App
 from kivy.config import Config
@@ -57,43 +58,25 @@ class SpotDLGUI(App):
         # Get Desktop path
         desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
 
-        # Prepare args dictionary for DownloadManager.
-        args = app_utils.get_arguments(queries={url}, desktop_path=desktop)
+        song_list = parse_query(
+            [url],
+            'mp3',
+            False,
+            False,
+            1
+            )
        
         # Save current directory.
         
         app_path = os.path.dirname(os.path.realpath(__file__))
 
-        # Change to the output folder.
-        os.chdir(args['output'])
+        # Move to desktop to save songs there
+        os.chdir(desktop)
 
-        # ! Code from SpotDL.
-        with DownloadManager(args) as downloader:  
-            # Find tracking files in queries
-            tracking_files = [
-                query for query in args['query'] if query.endswith(".spotdlTrackingFile")
-            ]
+        # Download
 
-            # Restart downloads
-            for tracking_file in tracking_files:
-                print("Preparing to resume download...")
-                downloader.resume_download_from_tracking_file(tracking_file)
-
-            # Get songs
-            song_list = parse_query(
-                args['query'],
-                args['output_format'],
-                args['use_youtube'],
-                args['generate_m3u'],
-                args['search_threads'],
-            )
-
-            # Start downloading
-            if len(song_list) > 0:
-                downloader.download_multiple_songs(song_list)
-                print('finished')
-
-
+        with DownloadManager() as downloader:
+            downloader.download_multiple_songs(song_list)
         # Move to the app path
 
         os.chdir(app_path)
