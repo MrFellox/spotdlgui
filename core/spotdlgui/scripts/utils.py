@@ -13,7 +13,7 @@ def get_window_state() -> bool:
                 return settings['isMaximized']
 
             else:
-                settings['isMaximized'] = 'False'
+                settings['isMaximized'] = False
 
     # Error while trying to read file, possibly changed by user.    
     except Exception as e:
@@ -37,3 +37,19 @@ def get_window_state() -> bool:
 
             with open('./core/data/config.json', 'w') as f:
                 json.dump(default_data, f, indent=2)
+
+def get_arguments(queries: list, desktop_path: str) -> dict:
+    '''
+    Sets arguments that DowloadManager needs.
+    (Default arguments were taken from SpotDL code.)
+    '''
+
+    with open('core/spotdlgui/args.json') as f:
+        args = json.load(f)
+
+    # Add the queries
+
+    args['query'] = queries
+    args['output'] = desktop_path
+
+    return args

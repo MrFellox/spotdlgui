@@ -36,11 +36,12 @@ BoxLayout:
         Label:
             id: instruction_label
             font_name: "Gotham"
-            text: 'Enter your song URL'
+            text: 'Enter your song URL or song name'
             font_size: "20dp"
             pos_hint: {"center_x": 0.5, "center_y": 0.8}
         
         TextInput:
+            id: url_entry
             size_hint: 0.4, 0.1
             pos_hint: {'center_x': 0.5, 'center_y': 0.5}
 
@@ -49,6 +50,6 @@ BoxLayout:
             text: "Download Song"
             font_name: "Gotham"
             font_size: root.width / 44
-            on_release: app.download_song
+            on_release: app._on_download_press()
             size_hint: (0.3, 0.12)
             pos_hint: {"center_x": 0.5, "center_y": 0.26}

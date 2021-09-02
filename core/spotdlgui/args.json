@@ -1,0 +1,14 @@
+{
+  "query": [],
+  "debug_termination": false,
+  "output": null,
+  "output_format": "mp3",
+  "user_auth": false,
+  "use_youtube": false,
+  "ffmpeg": null,
+  "ignore_ffmpeg_version": false,
+  "download_threads": 4,
+  "search_threads": 1,
+  "generate_m3u": false,
+  "version": false
+}
