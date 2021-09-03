@@ -15,6 +15,7 @@ def get_window_state() -> bool:
             else:
                 settings['isMaximized'] = False
 
+    # ! Revamp error handling and make so it writes default configurations, when options are introduced.
     # Error while trying to read file, possibly changed by user.    
     except Exception as e:
         print(e)
@@ -38,18 +39,12 @@ def get_window_state() -> bool:
             with open('./core/data/config.json', 'w') as f:
                 json.dump(default_data, f, indent=2)
 
-def get_arguments(queries: list, desktop_path: str) -> dict:
-    '''
-    Sets arguments that DowloadManager needs.
-    (Default arguments were taken from SpotDL code.)
-    '''
+def change_saved_window_state(state: bool):
+    # Open config file
+    with open ('./core/data/config.json') as f:
+        configs = json.load(f)
 
-    with open('core/spotdlgui/args.json') as f:
-        args = json.load(f)
+    configs['isMaximized'] = state
 
-    # Add the queries
-
-    args['query'] = queries
-    args['output'] = desktop_path
-
-    return args
+    with open ('./core/data/config.json', 'w') as f:
+        json.dump(configs, f, indent=2)

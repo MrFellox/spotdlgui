@@ -20,3 +20,6 @@ class DownloadingPopup(Popup):
 
         self.title = 'Downloading...'
         self.ids.popup_label.text = f'Attempting to download song(s).'
+
+    def change_text(self, text):
+        self.ids.popup_label.text = text

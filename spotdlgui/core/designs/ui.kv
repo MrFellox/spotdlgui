@@ -56,13 +56,16 @@ BoxLayout:
             id: instruction_label
             font_name: "Gotham"
             text: 'Enter your song URL or song name'
-            font_size: "20dp"
+            font_size: root.width / 48
             pos_hint: {"center_x": 0.5, "center_y": 0.8}
         
         TextInput:
-            id: url_entry
+            font_size: 32
+            id: searcher
+            multiline: False
             size_hint: 0.4, 0.1
             pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        
 
         Button:
             id: download_button

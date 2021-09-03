@@ -1,16 +1,6 @@
-from spotdl import download
 from core.spotdlgui.scripts import utils as app_utils
 from kivy.app import App
 from kivy.config import Config
-from kivy.lang import Builder
-from kivy.clock import Clock
-from kivy.core.text import LabelBase
-from core.spotdlgui.popups import DownloadingPopup
-from spotdl.download import DownloadManager
-from spotdl.parsers.query_parser import parse_query
-from spotdl.search import SpotifyClient
-import threading
-import os
 
 # Disable option to exit the app when Esc is pressed.
 Config.set('kivy', 'exit_on_escape', '0')
@@ -23,6 +13,19 @@ else:
     Config.set('graphics', 'height', '500')
 
 
+from kivy.lang import Builder
+from kivy.clock import Clock
+from kivy.core.window import Window
+from kivy.core.text import LabelBase
+from core.spotdlgui.popups import DownloadingPopup
+from spotdl.download import DownloadManager
+from spotdl.parsers.query_parser import parse_query
+from spotdl.search import SpotifyClient
+import threading
+import time
+import os
+
+
 # Add fonts
 
 KIVY_FONTS = [
@@ -31,11 +34,12 @@ KIVY_FONTS = [
         'name': 'Gotham',
         'fn_regular': './core/spotdlgui/fonts/GothamBold.ttf'
     }
-    
+
 ]
 
 for font in KIVY_FONTS:
     LabelBase.register(**font)
+
 
 class SpotDLGUI(App):
     def build(self):
@@ -49,38 +53,58 @@ class SpotDLGUI(App):
             user_auth=False
         )
 
+        # Event listeners
+        Window.bind(on_maximize=self.on_maximize)
+        Window.bind(on_restore=self.on_minimize)
+
+
         return Builder.load_file('core/designs/ui.kv')
 
     def download_song(self):
-        # Get url from the text entry
-        url = App.get_running_app().root.ids['url_entry'].text
+        # Get search query from the text entry
+        search_query = App.get_running_app().root.ids['searcher'].text
 
         # Get Desktop path
-        desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
+        desktop = os.path.join(os.path.join(
+            os.environ['USERPROFILE']), 'Desktop')
+
+        self.popup.change_text('Searching song(s)...')
 
         song_list = parse_query(
-            [url],
+            [search_query],
             'mp3',
             False,
             False,
             1
-            )
-       
-        # Save current directory.
+        )
+
+        for song_obj in song_list:
+            # Change popup text to current song
+            
+            self.popup.change_text(f'Attempting to download "{song_obj.song_name}"')
+            # Save current directory.
+
+            app_path = os.path.dirname(os.path.realpath(__file__))
+
+            # Move to desktop to save songs there
+            os.chdir(desktop)
+
+            # Download
+
+            with DownloadManager() as downloader:
+                downloader.download_single_song(song_obj)
+            
+            # Move to the app path
+
+            os.chdir(app_path)
+
+            self.popup.change_text(f'Succesfully downloaded "{song_obj.song_name}"\nto Desktop.')
+            time.sleep(3)
+
+        # Clean text on entry
+
+        App.get_running_app().root.ids['searcher'].text = ''
         
-        app_path = os.path.dirname(os.path.realpath(__file__))
-
-        # Move to desktop to save songs there
-        os.chdir(desktop)
-
-        # Download
-
-        with DownloadManager() as downloader:
-            downloader.download_multiple_songs(song_list)
-        # Move to the app path
-
-        os.chdir(app_path)
-
         # Close popup
         self.popup.dismiss()
 
@@ -95,6 +119,14 @@ class SpotDLGUI(App):
     def _start_download_thread(self, instance):
         self.thread = threading.Thread(target=self.download_song)
         self.thread.start()
+
+
+    # Kivy events
+    def on_maximize(self, *args):
+        app_utils.change_saved_window_state(True)
+
+    def on_minimize(self, *args):
+        app_utils.change_saved_window_state(False)
 
 if __name__ == '__main__':
     SpotDLGUI().run()
