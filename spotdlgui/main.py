@@ -81,7 +81,7 @@ class SpotDLGUI(App):
         for song_obj in song_list:
             # Change popup text to current song
             
-            self.popup.change_text(f'Attempting to download "{song_obj.song_name}"')
+            self.popup.change_text(f'Attempting to download \n"{song_obj.song_name}" by {song_obj.contributing_artists[0]}')
             # Save current directory.
 
             app_path = os.path.dirname(os.path.realpath(__file__))
@@ -98,7 +98,7 @@ class SpotDLGUI(App):
 
             os.chdir(app_path)
 
-            self.popup.change_text(f'Succesfully downloaded "{song_obj.song_name}"\nto Desktop.')
+            self.popup.change_text(f'Succesfully downloaded \n"{song_obj.song_name}" to Desktop.')
             time.sleep(3)
 
         # Clean text on entry
