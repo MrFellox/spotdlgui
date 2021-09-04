@@ -17,7 +17,7 @@ from kivy.lang import Builder
 from kivy.clock import Clock
 from kivy.core.window import Window
 from kivy.core.text import LabelBase
-from core.spotdlgui.popups import DownloadingPopup
+from core.spotdlgui.scripts.popups import DownloadingPopup
 from spotdl.download import DownloadManager
 from spotdl.parsers.query_parser import parse_query
 from spotdl.search import SpotifyClient
@@ -81,7 +81,7 @@ class SpotDLGUI(App):
         for song_obj in song_list:
             # Change popup text to current song
             
-            self.popup.change_text(f'Attempting to download \n"{song_obj.song_name}" by {song_obj.contributing_artists[0]}')
+            self.popup.change_text(f'Attempting to download \n"{song_obj.song_name}" by {song_obj.contributing_artists[0]}...')
             # Save current directory.
 
             app_path = os.path.dirname(os.path.realpath(__file__))
@@ -113,8 +113,6 @@ class SpotDLGUI(App):
 
         self.popup = DownloadingPopup()
         self.popup.open()
-
-        Clock.schedule_once(self._start_download_thread)
 
     def _start_download_thread(self, instance):
         self.thread = threading.Thread(target=self.download_song)
