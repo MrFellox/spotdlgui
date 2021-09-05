@@ -82,6 +82,7 @@ class SpotDLGUI(App):
             # Change popup text to current song
             
             self.popup.change_text(f'Attempting to download \n"{song_obj.song_name}" by {song_obj.contributing_artists[0]}...')
+            
             # Save current directory.
 
             app_path = os.path.dirname(os.path.realpath(__file__))
@@ -114,9 +115,8 @@ class SpotDLGUI(App):
         self.popup = DownloadingPopup()
         self.popup.open()
 
-    def _start_download_thread(self, instance):
-        self.thread = threading.Thread(target=self.download_song)
-        self.thread.start()
+        thread = threading.Thread(target=self.download_song)
+        thread.start()
 
 
     # Kivy events
