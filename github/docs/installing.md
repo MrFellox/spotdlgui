@@ -1,6 +1,15 @@
+# Installing SpotDLGUI
+
 ### Requirements
 
-- Python 3.9+
+- Python 3.9+ (in PATH)
+- ffmpeg (in PATH
+
+#### Installing ffmpeg
+
+- [Windows Tutorial](https://windowsloop.com/install-ffmpeg-windows-10/)
+- OSX `brew install ffmpeg`
+- Linux `sudo snap install ffmpeg`
 
 #### Download the project
 
@@ -10,7 +19,7 @@ You can clone the project with Git using:
 git clone https://github.com/MrFellox/spotdlgui.git
 ```
 
-Or downloading it [here](https://github.com/MrFellox/spotdlgui/archive/refs/heads/main.zip), or clicking on the green button and then clicking on `Download ZIP`
+Or downloading it [here](https://github.com/MrFellox/spotdlgui/archive/refs/heads/main.zip).
 
 You can now extract it wherever you like.
 
