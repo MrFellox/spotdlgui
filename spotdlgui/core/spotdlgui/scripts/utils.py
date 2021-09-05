@@ -1,4 +1,5 @@
 import json
+default_settings = {"isMaximized": False}
 
 def get_window_state() -> bool:
     '''
@@ -14,31 +15,17 @@ def get_window_state() -> bool:
 
             else:
                 settings['isMaximized'] = False
+                with open('./core/data/config.json', 'w') as f:
+                    json.dump(settings, f, indent=2)
 
     # ! Revamp error handling and make so it writes default configurations, when options are introduced.
-    # Error while trying to read file, possibly changed by user.    
+    # Error while trying to read file, possibly changed by user.   
     except Exception as e:
+        print('Error while reading window state:')
         print(e)
-
-        try:
-            with open('./core/data/config.json', 'w') as f:
-                settings = json.load(f)
-
-                settings['isMaximized'] == False
-
-                json.dump(settings, f, indent = 2)
-
-        except Exception as e:
-            print('An error ocurred while trying to fix isMaximized value.')
-            print(e)
-
-            # Fix to default value
-
-            default_data = {"isMaximized": False}
-
-            with open('./core/data/config.json', 'w') as f:
-                json.dump(default_data, f, indent=2)
-
+        create_config_file()
+        return False
+        
 def change_saved_window_state(state: bool):
     # Open config file
     with open ('./core/data/config.json') as f:
@@ -48,3 +35,8 @@ def change_saved_window_state(state: bool):
 
     with open ('./core/data/config.json', 'w') as f:
         json.dump(configs, f, indent=2)
+
+def create_config_file():
+    '''
+    Creates/overwrites the config file with the default settings.
+    '''

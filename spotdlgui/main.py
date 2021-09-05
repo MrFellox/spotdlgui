@@ -58,7 +58,7 @@ class SpotDLGUI(App):
         Window.bind(on_restore=self.on_minimize)
 
 
-        return Builder.load_file('core/designs/ui.kv')
+        return Builder.load_file('core/spotdlgui/designs/ui.kv')
 
     def download_song(self):
         # Get search query from the text entry
