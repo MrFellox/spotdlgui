@@ -3,7 +3,7 @@
 ### Requirements
 
 - Python 3.9+ (in PATH)
-- ffmpeg (in PATH
+- ffmpeg (in PATH)
 
 #### Installing ffmpeg
 
