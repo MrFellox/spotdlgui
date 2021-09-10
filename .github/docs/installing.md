@@ -5,13 +5,13 @@
 - Python 3.9+ (in PATH)
 - ffmpeg (in PATH)
 
-#### Installing ffmpeg
+## Installing ffmpeg
 
 - [Windows Tutorial](https://windowsloop.com/install-ffmpeg-windows-10/)
 - OSX `brew install ffmpeg`
 - Linux `sudo snap install ffmpeg`
 
-#### Download the project
+## Download the project
 
 You can clone the project with Git using:
 
@@ -23,7 +23,7 @@ Or downloading it [here](https://github.com/MrFellox/spotdlgui/archive/refs/head
 
 You can now extract it wherever you like.
 
-#### Creating a Virtual Environment (optional)
+## Creating a Virtual Environment (optional)
 
 You may want to create a virtual environment, to keep the tool's dependencies separated from the other modules you may have installed.
 
@@ -41,7 +41,7 @@ venv\Scripts\activate
 
 **NOTE: If you are using a Virtual Environment to install the dependencies, you have to activate it every time you want to run the tool.**
 
-#### Installing dependencies
+## Installing dependencies
 
 Open up a terminal in the root folder of the project and run:
 
@@ -51,7 +51,7 @@ python -m pip install -r requirements.txt
 
 Wait until everything installs.
 
-#### Running the tool
+## Running the tool
 
 In the root folder of the project, go to the `spotdlgui` folder, and run a terminal in there.
 Now, run the python file with:

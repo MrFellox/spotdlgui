@@ -2,7 +2,7 @@
 
 A GUI desktop app for SpotDL.
 
-<img src = github/img/ui_showcase.png width = 500 alt = UI>
+<img src = .github/img/ui_showcase.png width = 500 alt = UI>
 
 ### Features
 
@@ -18,7 +18,7 @@ A GUI desktop app for SpotDL.
 
 In this moment, the only way to get the project is by running it from the source code. Follow these steps to install it.
 
-Follow the steps [here](github/docs/installing.md) to install it.
+Follow the steps [here](.github/docs/installing.md) to install it.
 
 # Built with
 
