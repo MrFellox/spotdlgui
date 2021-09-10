@@ -29,49 +29,94 @@
             text: ''
             font_size: self.width / 12
             pos_hint: {'center_x': 1, 'center_y': 1}
-BoxLayout:
-    size: root.width, root.height
-    canvas.before:
-        Color:
-            rgb: utils.get_color_from_hex('#000000')
 
-        Rectangle:
-            pos: self.pos
-            size: self.size
+Manager:
+    MainScreen:
+    OptionsScreen:
 
-    
-    # Main Content
+<MainScreen>:
+    name: "mainScreen"
+    BoxLayout:
+        size: root.width, root.height
+        canvas.before:
+            Color:
+                rgb: utils.get_color_from_hex('#000000')
+
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+        
+        # Main Content
+
+        FloatLayout:
+            size: root.width, root.height
+
+            Label:
+                id: label_title
+                font_name: "Gotham"
+                text: 'SpotDLGUI'
+                font_size: root.width / 36
+                pos_hint: {"center_x": 0.09, "center_y": 0.94}
+
+            Label:
+                id: instruction_label
+                font_name: "Gotham"
+                text: 'Enter your song URL or song name'
+                font_size: root.width / 48
+                pos_hint: {"center_x": 0.5, "center_y": 0.8}
+            
+            TextInput:
+                font_size: 32
+                id: searcher
+                multiline: False
+                size_hint: 0.4, 0.1
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            
+
+            Button:
+                id: download_button
+                text: "Download Song"
+                font_name: "Gotham"
+                font_size: root.width / 44
+                on_release: root._on_download_press()
+                size_hint: (0.3, 0.12)
+                pos_hint: {"center_x": 0.5, "center_y": 0.26}
+            
+            Button:
+                id: settings_button
+                text: "Settings"
+                font_name: "Gotham"
+                font_size: root.width / 44
+                on_release: root._enter_settings()
+                size_hint: (0.1, 0.1)
+                pos_hint: {"center_x": 0.94, "center_y": 0.93}
+
+<OptionsScreen>:
+    name: "optionsScreen"
 
     FloatLayout:
-        size: root.width, root.height
-
-        Label:
-            id: label_title
-            font_name: "Gotham"
-            text: 'SpotDLGUI'
-            font_size: root.width / 36
-            pos_hint: {"center_x": 0.09, "center_y": 0.94}
-
-        Label:
-            id: instruction_label
-            font_name: "Gotham"
-            text: 'Enter your song URL or song name'
-            font_size: root.width / 48
-            pos_hint: {"center_x": 0.5, "center_y": 0.8}
-        
-        TextInput:
-            font_size: 32
-            id: searcher
-            multiline: False
-            size_hint: 0.4, 0.1
-            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-        
-
+        # Go back button
         Button:
-            id: download_button
-            text: "Download Song"
-            font_name: "Gotham"
+            text: '<-'
             font_size: root.width / 44
-            on_release: app._on_download_press()
-            size_hint: (0.3, 0.12)
-            pos_hint: {"center_x": 0.5, "center_y": 0.26}
+            size_hint: (0.1, 0.1)
+            pos_hint: {'center_x': 0.06, "center_y": 0.93}
+            id: leave_settings
+            on_release: 
+                root.manager.current = 'mainScreen'
+                root.manager.transition.direction = 'right'
+
+        Label:
+            text: 'Always ask for download location'
+            font_size: root.width / 76
+            pos_hint: {"center_x": 0.23, "center_y": 0.83}
+
+        # Ask download location switch
+
+        Switch:
+            id: askLocation_switch
+            active: app.askLocation
+            on_active: root.switch_callback('askLocation', self.active)
+            size_hint: (0.1, 0.1)
+            pos_hint: {'center_x': 0.43, 'center_y': 0.83}
