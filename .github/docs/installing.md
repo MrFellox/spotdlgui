@@ -19,7 +19,7 @@ You can clone the project with Git using:
 git clone https://github.com/MrFellox/spotdlgui.git
 ```
 
-Or downloading it [here](https://github.com/MrFellox/spotdlgui/archive/refs/heads/main.zip).
+Or downloading it [here](https://github.com/MrFellox/spotdlgui/releases/download/v1.0.1/spotdlgui.v1.0.1.zip).
 
 You can now extract it wherever you like.
 
