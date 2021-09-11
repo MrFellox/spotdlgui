@@ -83,6 +83,8 @@ def get_download_path() -> str:
     '''
     Returns the path to the selected folder where the user wants to save songs.
     '''
+    
+    # If user wants too be asked every time before downloading
     if get_setting_value('askLocation') == True:
         output = ''
 
@@ -92,10 +94,50 @@ def get_download_path() -> str:
         
         while output == '':
             output = filedialog.askdirectory()
+
+        return output
         
     else:
-        # Get Desktop path
-        output = os.path.join(os.path.join(
-            os.environ['USERPROFILE']), 'Desktop')
+        # Runs if the user wants to download to default path
+
+        # If there is no default path
+        if get_setting_value('defaultLocation') == None:
+            
+            # Get a default path
+            output_path = ask_for_default_path()
+
+            # Save
+            change_config_value('defaultLocation', output_path)
+
+            return output_path
+        else:
+            # Use default path
+            output = get_setting_value('defaultLocation')
+
+            return output
+
+def default_path_kivy() -> str:
+    '''
+    Returns the string of the default download path for Kivy.
+    '''
+
+    if get_setting_value('defaultLocation') == None:
+        return 'None'
+
+    else:
+        return get_setting_value('defaultLocation')
+
+def ask_for_default_path():
+    '''
+    Asks to the user for a directory where to automatically save songs if always ask location is off.  
+    '''
+    output = ''
+
+    # Using tk since it uses system's ui.
+    root = tk.Tk()
+    root.withdraw()
+    
+    while output == '':
+        output = filedialog.askdirectory()
 
     return output

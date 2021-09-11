@@ -82,7 +82,7 @@ Manager:
                 on_release: root._on_download_press()
                 size_hint: (0.3, 0.12)
                 pos_hint: {"center_x": 0.5, "center_y": 0.26}
-            
+
             Button:
                 id: settings_button
                 text: "Settings"
@@ -120,3 +120,23 @@ Manager:
             on_active: root.switch_callback('askLocation', self.active)
             size_hint: (0.1, 0.1)
             pos_hint: {'center_x': 0.43, 'center_y': 0.83}
+
+        
+        Label:
+            text: 'Default download location:'
+            font_size: root.width / 76
+            pos_hint: {"center_x": 0.23, "center_y": 0.74}
+
+        Label:
+            text: app.default_path
+            id: default_path
+            font_size: root.width / 92
+            pos_hint: {"center_x": 0.23, "center_y": 0.65}
+
+        Button: 
+            text: "Change"
+            on_release: root.change_default_path()
+            font_size: self.width / 6
+            font_name: "Gotham"
+            size_hint: (0.079, 0.076)
+            pos_hint: {"center_x": 0.43, "center_y": 0.71}

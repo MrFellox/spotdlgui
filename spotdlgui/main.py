@@ -101,9 +101,9 @@ class MainScreen(Screen):
             self.popup.change_text(
                 f'Attempting to download \n"{song.song_name}" by {song.contributing_artists[0]}...')
 
-            with DownloadManager() as downloader:
-                downloader.download_single_song(song)
-
+            with DownloadManager() as downloader:                
+              downloader.download_single_song(song)
+                    
             self.popup.change_text(
                 f'Succesfully downloaded \n"{song.song_name}" to ' + self.output_path)
             time.sleep(3)
@@ -142,9 +142,6 @@ class OptionsScreen(Screen):
         ask_location_switch.active = app_utils.get_switch_setting(
             'askLocation')
 
-        # Bind all switches to switch callback function
-        self.ids['askLocation_switch'].bind(active=self.switch_callback)
-
     def switch_callback(self, instance, value):
         '''
         Runs everytime a switch that is linked to this callback is switched.
@@ -155,12 +152,16 @@ class OptionsScreen(Screen):
         else:
             pass
 
+    def change_default_path(self):
+        output_path = app_utils.ask_for_default_path()
+        app_utils.change_config_value('defaultLocation', output_path)
 
 class SpotDLGUI(App):
     askLocation = BooleanProperty(app_utils.get_switch_setting('askLocation'))
+    default_path = app_utils.default_path_kivy()
 
     def build(self):
-        self.title = 'SpotDLGUI v1.0'
+        self.title = 'SpotDLGUI v1.1'
 
         # Event listeners
         Window.bind(on_maximize=self.on_maximize)
